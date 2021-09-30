@@ -37,8 +37,9 @@
             android:id="@+id/tipoDatoPalabra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:editable="false"
-            android:hint="Subcategoria">
+            android:enabled="false"
+            android:background="@color/color_gray"
+            android:text="@string/configuracion_subcategoria_helper">
 
         </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
     </com.google.android.material.textfield.TextInputLayout>

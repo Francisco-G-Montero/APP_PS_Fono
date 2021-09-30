@@ -14,7 +14,8 @@ public abstract class Constantes {
     public static final String VOCES_FAMILIARES = "Voces Familiares";
     public static final String RUIDO = "Ruido";
 
-    public static final String[] CATEGORIAS = { PALABRA, ORACIONES, CANCIONES, INSTRUMENTOS, ESTILOS_MUSICALES, VOCES_FAMILIARES};
+    //public static final String[] CATEGORIAS = { PALABRA, ORACIONES, CANCIONES, INSTRUMENTOS, ESTILOS_MUSICALES, VOCES_FAMILIARES};
+    public static final String[] CATEGORIAS = { PALABRA, ORACIONES};
 
     //TIPOS DE EJERCICIOS
     public static final String J_DISCRIMINAR = "Discriminar (2 opciones)";
@@ -47,7 +48,8 @@ public abstract class Constantes {
     public static final String LUGARES = "Lugares";
     public static final String MESES = "Meses";
 
-    public static final String [] SUBCATEGORIAS_PALABRAS = {TODAS,DIAS_SEMANA,NUMEROS,COLORES,ANIMALES,NOMBRES,ROPA,COMIDA,LUGARES,MESES};
+    //public static final String [] SUBCATEGORIAS_PALABRAS = {TODAS,DIAS_SEMANA,NUMEROS,COLORES,ANIMALES,NOMBRES,ROPA,COMIDA,LUGARES,MESES};
+    public static final String [] SUBCATEGORIAS_PALABRAS = {DIAS_SEMANA,NUMEROS,COLORES,MESES};
 
     public static final String [] FILTRO_PRACTICA = {TODAS,DIAS_SEMANA,NUMEROS,COLORES,ANIMALES,NOMBRES,ROPA,COMIDA,LUGARES,MESES, ORACIONES, VOCES_FAMILIARES, ESTILOS_MUSICALES, CANCIONES, INSTRUMENTOS, RUIDO};
 

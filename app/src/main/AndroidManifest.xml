@@ -19,9 +19,6 @@
             android:name=".logica.EjerciciosOpcionesActivity"
             android:exported="true" />
         <activity
-            android:name=".logica.Ejercicio_Completar_Frase_Tres_Opciones"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".DetalleResultado"
             android:exported="true"
             android:screenOrientation="portrait" />
@@ -29,10 +26,7 @@
             android:name=".AdministrarResultados"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".logica.Ejercicio_Completar_Frase_NO_Opciones"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".logica.Ejercicio_Cinco_Opciones"
+            android:name=".logica.EjercicioCompletarOracionSinOpActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".AdminitrarSonidos"
@@ -45,13 +39,10 @@
             android:name=".Configuracion"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".logica.Ejercicio_Completar"
+            android:name=".logica.EjercicioEscribirOyoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ConfiguracionAgregarSonido"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".logica.Ejercicio_Tres_Opciones"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"

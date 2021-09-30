@@ -19,7 +19,7 @@ import com.example.myapplication.room_database.palabras.SoundRepository;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Ejercicio_Completar_Frase_NO_Opciones extends AppCompatActivity {
+public class EjercicioCompletarOracionSinOpActivity extends AppCompatActivity {
     public SoundRepository sr;
     ReproductorDeAudioController reproductorDeAudioController = new ReproductorDeAudioController();
     List<Sound> listaSonidos;
@@ -61,7 +61,7 @@ public class Ejercicio_Completar_Frase_NO_Opciones extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(activarSonido()){
-                    sr.getRutaSonido(ruido).observe(Ejercicio_Completar_Frase_NO_Opciones.this, new Observer<List<Sound>>() {
+                    sr.getRutaSonido(ruido).observe(EjercicioCompletarOracionSinOpActivity.this, new Observer<List<Sound>>() {
                         @Override
                         public void onChanged(List<Sound> sounds) {
                             reproductorDeAudioController.startSoundOracionesNoise(listaSonidos.get(rand).getRuta_sonido(), sounds.get(0).getRuta_sonido(),intensidad,getApplicationContext());

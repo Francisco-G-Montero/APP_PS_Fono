@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,11 +19,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 
 import com.example.myapplication.datos.Constantes;
-import com.example.myapplication.logica.Ejercicio_Cinco_Opciones;
-import com.example.myapplication.logica.Ejercicio_Completar;
-import com.example.myapplication.logica.Ejercicio_Completar_Frase_NO_Opciones;
-import com.example.myapplication.logica.Ejercicio_Completar_Frase_Tres_Opciones;
-import com.example.myapplication.logica.Ejercicio_Tres_Opciones;
+import com.example.myapplication.logica.EjercicioEscribirOyoActivity;
+import com.example.myapplication.logica.EjercicioCompletarOracionSinOpActivity;
 import com.example.myapplication.logica.EjerciciosOpcionesActivity;
 import com.example.myapplication.room_database.palabras.Sound;
 import com.example.myapplication.room_database.palabras.SoundRepository;
@@ -48,7 +46,7 @@ public class Configuracion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracion);
         final Toolbar toolbar = findViewById(R.id.toolbar_configuracion);
-        toolbar.setTitle("Configuración");
+        toolbar.setTitle(R.string.config_title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -67,9 +65,6 @@ public class Configuracion extends AppCompatActivity {
         spinnerTipoEjercicio.setAdapter(adapterEjercicio);
 
         modo = getIntent().getStringExtra("Modo");
-        Log.d("modo ejercitacion",modo);
-
-
 
         final ArrayList<String> ruidosList = new ArrayList<>();
         adapterRuido = new ArrayAdapter<>(getApplicationContext(), R.layout.dropdown_menu_popup_item, ruidosList);
@@ -93,8 +88,11 @@ public class Configuracion extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String tipo = parent.getItemAtPosition(position).toString();
+                spinnerSubCategoria.setEnabled(true);
+                spinnerSubCategoria.setText("");
+                spinnerSubCategoria.setHint("Subcategoría");
+                spinnerSubCategoria.setBackgroundColor(getColor(R.color.color_background));
                 switch (tipo) {
-
                     //FONEMA, PALABRA, ORACIONES, CANCIONES, INSTRUMENTOS, ESTILOS_MUSICALES, VOCES_FAMILIARES
                     case (Constantes.PALABRA):
                         spinnerSubCategoria.setAdapter(adapterSubCategoria);
@@ -191,9 +189,10 @@ public class Configuracion extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), EjerciciosOpcionesActivity.class);
                     if (!switchRuido.isChecked()) confRuido = "Sin Ruido";
 
-                    if (confTipoEjercio.equals(Constantes.J_IDENTIFICAR_TRES_OPCIONES)
-                    || confTipoEjercio.equals(Constantes.J_IDENTIFICAR_CINCO_OPCIONES)
-                    || confTipoEjercio.equals(Constantes.J_TODA_LA_CATEGORIA)){
+                    if (confTipoEjercio.equals(Constantes.J_DISCRIMINAR)
+                            || confTipoEjercio.equals(Constantes.J_IDENTIFICAR_TRES_OPCIONES)
+                            || confTipoEjercio.equals(Constantes.J_IDENTIFICAR_CINCO_OPCIONES)
+                            || confTipoEjercio.equals(Constantes.J_TODA_LA_CATEGORIA)){
                         intent.putExtra("subDato", confSubDato);
                         intent.putExtra("tipoRuido", confRuido);
                         intent.putExtra("intensidad",confIntensidad);
@@ -203,7 +202,7 @@ public class Configuracion extends AppCompatActivity {
                     switch (confTipoEjercio) {
 
                         case Constantes.J_ESCRIBIR_LO_QUE_OYO:
-                            Intent intent2 = new Intent(getApplicationContext(), Ejercicio_Completar.class);
+                            Intent intent2 = new Intent(getApplicationContext(), EjercicioEscribirOyoActivity.class);
                             if (!switchRuido.isChecked()) {
                                 confRuido = "Sin Ruido";
                             }
@@ -216,7 +215,7 @@ public class Configuracion extends AppCompatActivity {
 
 
                         case Constantes.COMPLETAR_ORACION_SIN_OPCIONES:
-                            Intent intent4 = new Intent(getApplicationContext(), Ejercicio_Completar_Frase_NO_Opciones.class);
+                            Intent intent4 = new Intent(getApplicationContext(), EjercicioCompletarOracionSinOpActivity.class);
                             if (!switchRuido.isChecked()) {
                                 confRuido = "Sin Ruido";
                             }
@@ -225,19 +224,6 @@ public class Configuracion extends AppCompatActivity {
                             intent4.putExtra("intensidad",confIntensidad);
                             intent4.putExtra("modo",modo);
                             startActivity(intent4);
-                            break;
-
-
-                        case Constantes.COMPLETAR_ORACION_CON_OPCIONES:
-                            Intent intent5 = new Intent(getApplicationContext(), Ejercicio_Completar_Frase_Tres_Opciones.class);
-                            if (!switchRuido.isChecked()) {
-                                confRuido = "Sin Ruido";
-                            }
-                            intent5.putExtra("subDato", confSubDato);
-                            intent5.putExtra("tipoRuido", confRuido);
-                            intent5.putExtra("intensidad",confIntensidad);
-                            intent5.putExtra("modo",modo);
-                            startActivity(intent5);
                             break;
                     }
                 }

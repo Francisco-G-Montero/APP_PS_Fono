@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Ejercicio_Completar extends AppCompatActivity {
+public class EjercicioEscribirOyoActivity extends AppCompatActivity {
     ReproductorDeAudioController reproductorDeAudioController;
     public SoundRepository sr;
     List<Sound> listaSonidos;

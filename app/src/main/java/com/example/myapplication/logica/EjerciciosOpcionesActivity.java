@@ -38,6 +38,7 @@ public class EjerciciosOpcionesActivity extends AppCompatActivity implements OnO
     private int incorrectCounterStage = 0;
     private int optionsQuantity = 0;
     private final int maxRepetitions = 10;
+    private String tipoEjercicio = "";
     private int opcionCorrecta;
     private final int wrongAnswersLimit = 2;
     private String ruido, subdato, errores = "";
@@ -94,13 +95,14 @@ public class EjerciciosOpcionesActivity extends AppCompatActivity implements OnO
                 });
                 break;
         }
-
     }
 
     void setup() {
         mOptions.clear();
-        String tipoEjercicio = getIntent().getStringExtra(getString(R.string.tipo_ejercicio));
-        if (tipoEjercicio.equals(Constantes.J_IDENTIFICAR_TRES_OPCIONES))
+        tipoEjercicio = getIntent().getStringExtra(getString(R.string.tipo_ejercicio));
+        if (tipoEjercicio.equals(Constantes.J_DISCRIMINAR))
+            optionsQuantity = 2;
+        else if (tipoEjercicio.equals(Constantes.J_IDENTIFICAR_TRES_OPCIONES))
             optionsQuantity = 3;
         else if (tipoEjercicio.equals(Constantes.J_IDENTIFICAR_CINCO_OPCIONES))
             optionsQuantity = 5;
@@ -189,7 +191,7 @@ public class EjerciciosOpcionesActivity extends AppCompatActivity implements OnO
             String today = formatter.format(date);
             Intent intent = new Intent(getApplicationContext(), DetalleResultado.class);
             intent.putExtra("fecha", today);
-            intent.putExtra("ejercicio", Constantes.J_IDENTIFICAR_CINCO_OPCIONES);
+            intent.putExtra("ejercicio", tipoEjercicio);
             intent.putExtra("categoria", subdato);
             intent.putExtra("ruido", ruido);
             intent.putExtra("intensidad", mReproductorDeAudioController.getIntensidadPorcentual() + "%");
