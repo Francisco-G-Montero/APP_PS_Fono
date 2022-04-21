@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fono APP</string>
+    <string name="app_name">EscuchAR</string>
     <string name="title_activity_numeros">Números</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="tab_text_1">Pŕactica</string>
@@ -34,4 +34,7 @@
     <string name="tipo_ejercicio">tipo_ejercicio</string>
     <string name="config_title">Configuración</string>
     <string name="configuracion_subcategoria_helper">Primero seleccione una categoría</string>
+    <string name="activity_setup_tv_category">Categoría</string>
+    <string name="activity_setup_tv_subcategory">Subcategoría</string>
+    <string name="activity_setup_tv_exercise">Ejercicio</string>
 </resources>

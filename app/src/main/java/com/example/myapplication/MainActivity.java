@@ -8,90 +8,74 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.viewpager.widget.ViewPager;
 
-import com.example.myapplication.common.adapters.PageAdapter;
+import com.example.myapplication.common.constants.Constantes;
+import com.example.myapplication.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabItem;
-import com.google.android.material.tabs.TabLayout;
 
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    private PageAdapter pageAdapter;
-    private DrawerLayout miDrawerLayout;
-    private ActionBarDrawerToggle mToggle;
+    private DrawerLayout drawerLayout;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         setup();
     }
 
     void setup() {
-
-
-
-
-        miDrawerLayout = findViewById(R.id.drower_layout);
-        mToggle = new ActionBarDrawerToggle(this, miDrawerLayout, R.string.close, R.string.open);
-        miDrawerLayout.addDrawerListener(mToggle);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        final TabLayout tabLayout = findViewById(R.id.tablayout);
-        TabItem tabStatus = findViewById(R.id.tabStatus);
-        TabItem tabCalls = findViewById(R.id.tabCalls);
-        final ViewPager viewPager = findViewById(R.id.viewPager);
-        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(pageAdapter);
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+        drawerLayout = binding.getRoot();
+        setSupportActionBar(binding.toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        ActionBarDrawerToggle actionBarDrawerToggle =
+                new ActionBarDrawerToggle(this, drawerLayout, R.string.close, R.string.open);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        binding.navView.setNavigationItemSelectedListener(this);
+        binding.btnExercise.setOnClickListener(view -> {
+            Intent intent = new Intent(this, ActivityConfig.class);
+            intent.putExtra("Modo", Constantes.EJERCITACION);
+            startActivity(intent);
         });
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        binding.btnTest.setOnClickListener(view -> {
+            Intent intent = new Intent(this, ActivityConfig.class);
+            intent.putExtra("Modo", Constantes.EVALUACION);
+            startActivity(intent);
+        });
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (mToggle.onOptionsItemSelected(item)) {
-            return true;
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        drawerLayout.openDrawer(GravityCompat.START);
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
-        if(id== R.id.administrarSonidos){
-            Intent intent = new Intent(getApplicationContext(),AdminitrarSonidos.class);
+        if (id == R.id.administrarSonidos) {
+            Intent intent = new Intent(getApplicationContext(), AdminitrarSonidos.class);
             startActivity(intent);
         }
-        if(id== R.id.consultarResultado){
-            Intent intent = new Intent(getApplicationContext(),AdministrarResultados.class);
+        if (id == R.id.consultarResultado) {
+            Intent intent = new Intent(getApplicationContext(), AdministrarResultados.class);
             startActivity(intent);
         }
         return false;

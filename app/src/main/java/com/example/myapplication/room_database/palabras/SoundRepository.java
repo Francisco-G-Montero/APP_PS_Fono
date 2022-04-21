@@ -20,6 +20,11 @@ public class SoundRepository {
     private LiveData<List<Sound>> ruidosSounds;
     private LiveData<List<Sound>> rutaRuido;
     private LiveData<List<Sound>> oracionesSounds;
+    private LiveData<Sound> necesitoSound;
+    private LiveData<Sound> vasosGrandesSound;
+    private LiveData<Sound> esHoySound;
+    private LiveData<Sound> hoyEsSound;
+    private LiveData<Sound> yLLoviendoSound;
 
 
     public SoundRepository(Application application) {
@@ -32,8 +37,11 @@ public class SoundRepository {
         coloresSounds = soundDao.getListOfColores();
         ruidosSounds = soundDao.getListOfRuido();
         oracionesSounds = soundDao.getListOfOraciones();
-
-
+        necesitoSound = soundDao.getNecesitoConnector("necesito");
+        vasosGrandesSound = soundDao.getNecesitoConnector("vasos grandes");
+        esHoySound = soundDao.getNecesitoConnector("es hoy");
+        hoyEsSound = soundDao.getNecesitoConnector("hoy es");
+        yLLoviendoSound = soundDao.getNecesitoConnector("y esta lloviendo");
     }
 
     public void agregarSonido(Sound sound) {
@@ -58,6 +66,26 @@ public class SoundRepository {
 
     public LiveData<List<Sound>> getNumerosSounds() {
         return numerosSounds;
+    }
+
+    public LiveData<Sound> getNecesitoSound() {
+        return necesitoSound;
+    }
+
+    public LiveData<Sound> getVasosGrandes() {
+        return vasosGrandesSound;
+    }
+
+    public LiveData<Sound> getEsHoySound() {
+        return esHoySound;
+    }
+
+    public LiveData<Sound> getHoyEsSound() {
+        return hoyEsSound;
+    }
+
+    public LiveData<Sound> getyLLoviendoSound() {
+        return yLLoviendoSound;
     }
 
     public LiveData<List<Sound>> getColoresSounds() {

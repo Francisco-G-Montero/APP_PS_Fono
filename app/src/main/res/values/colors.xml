@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1565c0</color>
-    <color name="colorPrimaryDark">#003c8f</color>
-    <color name="colorAccent">#5e92f3</color>
+    <color name="colorPrimary">#ee7624</color>
+    <color name="colorPrimaryDark">#D56518</color>
+    <color name="colorAccent">#EF9E67</color>
     <color name="colorWhite">#ffffff</color>
     <color name="fondoGrabar">#EDEDFA</color>
 
     <!-- Material Theme Colors -->
-    <color name="color_primary">#1565c0</color>
-    <color name="color_primary_light">#5e92f3</color>
-    <color name="color_primary_variant">#003c8f</color>
+    <color name="color_primary">#ee7624</color>
+    <color name="color_primary_light">#EF9E67</color>
+    <color name="color_primary_variant">#D56518</color>
     <color name="color_secondary">#424242</color>
     <color name="color_secondary_light">#6d6d6d</color>
     <color name="color_secondary_variant">#1b1b1b</color>
 
     <color name="color_background">#fafafa</color>
+    <color name="color_background_primary">#8FE3F4FF</color>
     <color name="color_surface">#ffffff</color>
     <color name="color_error">#d50000</color>
 

@@ -1,181 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/layout_config"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_config"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Configuracion">
+    android:background="@color/color_background_primary"
+    tools:context=".ActivityConfig">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_configuracion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/color_primary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Configuración"
+        app:title="Configuración del ejecicio"
         app:titleTextColor="@color/colorWhite" />
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInput_subcategoria"
-        android:layout_marginHorizontal="6dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInput_categoria">
-
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/tipoDatoPalabra"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:background="@color/color_gray"
-            android:text="@string/configuracion_subcategoria_helper">
-
-        </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginHorizontal="6dp"
-        android:id="@+id/textInput_categoria"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+    <ScrollView
+        android:id="@+id/sv_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        app:layout_constraintHeight_percent="0.8"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_configuracion">
 
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/tipoDato"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:editable="false"
-            android:hint="Categoria a trabajar">
+            android:orientation="vertical">
 
-        </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
-    </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="Configuración básica" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginHorizontal="6dp"
-        android:id="@+id/textInput_tipoEjercicio"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInput_subcategoria">
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
 
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
 
-            android:id="@+id/tipoEjercicio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:editable="false"
-            android:hint="Tipo de ejercicio" />
-    </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/tv_categoria"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/activity_setup_tv_category"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginHorizontal="6dp"
-        android:id="@+id/textInput_ruido"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchRuido">
+                    <Spinner
+                        android:id="@+id/spinner_categoria"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_categoria"
+                        app:layout_constraintStart_toStartOf="@+id/tv_categoria"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_categoria" />
 
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/ruido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:editable="false"
-            android:hint="Ruido"
-            android:visibility="invisible">
+                    <TextView
+                        android:id="@+id/tv_subcategoria"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/activity_setup_tv_subcategory"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_categoria"
+                        app:layout_constraintStart_toStartOf="@+id/tv_categoria"
+                        app:layout_constraintTop_toBottomOf="@+id/spinner_categoria" />
 
-        </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
+                    <Spinner
+                        android:id="@+id/spinner_subcategoria"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_categoria"
+                        app:layout_constraintStart_toStartOf="@+id/tv_categoria"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_subcategoria" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/tv_exercise"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/activity_setup_tv_exercise"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_categoria"
+                        app:layout_constraintStart_toStartOf="@+id/tv_categoria"
+                        app:layout_constraintTop_toBottomOf="@+id/spinner_subcategoria" />
 
-    <Switch
-        android:id="@+id/switchRuido"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="7dp"
-        android:text="Activado/Desactivado"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvRuido"
-        app:layout_constraintEnd_toEndOf="parent" />
+                    <Spinner
+                        android:id="@+id/spinner_exercise"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_categoria"
+                        app:layout_constraintStart_toStartOf="@+id/tv_categoria"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_exercise" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Configuración avanzada" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tvRuido"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="6dp"
+                        android:layout_marginTop="18dp"
+                        android:text="Ruido"
+                        android:textColor="#000"
+                        android:textSize="18dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switchRuido"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="7dp"
+                        android:text="Activado/Desactivado"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/tvRuido"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:thumbTint="@color/switch_tint" />
+
+                    <Spinner
+                        android:id="@+id/spinner_noise"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/switchRuido" />
+
+                    <TextView
+                        android:id="@+id/tvIntensidad"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="6dp"
+                        android:layout_marginTop="28dp"
+                        android:text="Intensidad del ruido"
+                        android:textSize="18dp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/spinner_noise" />
+
+                    <SeekBar
+                        android:id="@+id/seekBar"
+                        style="@style/Widget.AppCompat.SeekBar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="6dp"
+                        android:layout_marginTop="20dp"
+                        android:max="10"
+                        android:min="1"
+                        android:progress="1"
+                        android:thumbTint="@color/color_primary"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvIntensidad" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
 
     <Button
-        android:layout_marginHorizontal="6dp"
         android:id="@+id/btn_ejercicio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Comenzar Ejercicio"
+        android:layout_marginHorizontal="16dp"
+        android:text="Comenzar ejercicio"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:layout_marginHorizontal="6dp"
-        android:id="@+id/tvRuido"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Ruido"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInput_tipoEjercicio" />
-
-    <TextView
-        android:layout_marginHorizontal="6dp"
-        android:id="@+id/tvIntensidad"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Intensidad del ruido"
-        android:textSize="18dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInput_ruido" />
-
-    <SeekBar
-        android:layout_marginHorizontal="6dp"
-        android:id="@+id/seekBar"
-        style="@style/Widget.AppCompat.SeekBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:min="1"
-        android:max="10"
-        android:progress="1"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/btn_ejercicio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvIntensidad" />
-
+        app:layout_constraintTop_toBottomOf="@+id/sv_container" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

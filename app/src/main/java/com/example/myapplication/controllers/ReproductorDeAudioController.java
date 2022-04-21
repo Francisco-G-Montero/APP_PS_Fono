@@ -6,15 +6,20 @@ import android.media.MediaPlayer;
 
 import java.io.IOException;
 
-public class ReproductorDeAudioController {
+public class ReproductorDeAudioController implements MediaPlayer.OnCompletionListener {
 
     float intensidad;
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        mp.reset();
+    }
 
     private static class SingletonHolder {
         private static final ReproductorDeAudioController INSTANCE = new ReproductorDeAudioController();
     }
 
-    public static ReproductorDeAudioController getmInstance(){
+    public static ReproductorDeAudioController getmInstance() {
         return SingletonHolder.INSTANCE;
     }
 
@@ -26,7 +31,7 @@ public class ReproductorDeAudioController {
         this.intensidad = intensidad;
     }
 
-    public double getIntensidadPorcentual(){
+    public double getIntensidadPorcentual() {
         return Math.floor(intensidad * 100);
     }
 
@@ -53,8 +58,7 @@ public class ReproductorDeAudioController {
     }
 
 
-
-    public void startSoundWithNoise(String filename, String rutaRuido,float intensidad, Context context){
+    public void startSoundWithNoise(String filename, String rutaRuido, float intensidad, Context context) {
         AssetFileDescriptor afd = null;
         try {
             afd = context.getResources().getAssets().openFd(filename);
@@ -73,7 +77,7 @@ public class ReproductorDeAudioController {
 
         try {
             assert afdRuido != null;
-            mpRuido.setDataSource(afdRuido.getFileDescriptor(),afdRuido.getStartOffset(),afdRuido.getLength());
+            mpRuido.setDataSource(afdRuido.getFileDescriptor(), afdRuido.getStartOffset(), afdRuido.getLength());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,7 +86,7 @@ public class ReproductorDeAudioController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mpRuido.setVolume(intensidad,intensidad);
+        mpRuido.setVolume(intensidad, intensidad);
         mpRuido.start();
 
         try {
@@ -98,26 +102,50 @@ public class ReproductorDeAudioController {
         }
         mpSound.start();
         try {
-            Thread.sleep(mpSound.getDuration()+200);
-        }catch(InterruptedException e){
+            Thread.sleep(mpSound.getDuration() + 200);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         mpRuido.stop();
 
     }
 
+    MediaPlayer mpSound = new MediaPlayer();
+    MediaPlayer mpConnectorSound = new MediaPlayer();
+    MediaPlayer mpEndConnector = new MediaPlayer();
 
-    public void playSonidoPersonalizado(String ruta){
-        MediaPlayer mMediaPlayer = new MediaPlayer();
+    public void sentenceWithConnectors(String startConnectorPath, String endConnectorPath, String soundPath, boolean connectorAtStart, Context context) {
         try {
-            mMediaPlayer.setDataSource(ruta);
-            mMediaPlayer.prepare();
-            mMediaPlayer.start();
-        } catch (IOException e) {
+            mpSound.setOnCompletionListener(this);
+            mpConnectorSound.setOnCompletionListener(this);
+            mpEndConnector.setOnCompletionListener(this);
+            AssetFileDescriptor afdSound = context.getResources().getAssets().openFd(soundPath);
+            AssetFileDescriptor afdConnectorSound = context.getResources().getAssets().openFd(startConnectorPath);
+            AssetFileDescriptor afdEndConnectorSound;
+            mpConnectorSound.setDataSource(afdConnectorSound.getFileDescriptor(), afdConnectorSound.getStartOffset(), afdConnectorSound.getLength());
+            mpConnectorSound.prepare();
+            mpSound.setDataSource(afdSound.getFileDescriptor(), afdSound.getStartOffset(), afdSound.getLength());
+            mpSound.prepare();
+            if (connectorAtStart) {
+                mpConnectorSound.start();
+                Thread.sleep(mpConnectorSound.getDuration());
+                mpSound.start();
+                if (endConnectorPath != null) {
+                    afdEndConnectorSound = context.getResources().getAssets().openFd(endConnectorPath);
+                    mpEndConnector.setDataSource(afdEndConnectorSound.getFileDescriptor(), afdEndConnectorSound.getStartOffset(), afdEndConnectorSound.getLength());
+                    mpEndConnector.prepare();
+                    Thread.sleep(mpSound.getDuration());
+                    mpEndConnector.start();
+                }
+            } else {
+                mpSound.start();
+                Thread.sleep(mpSound.getDuration());
+                mpConnectorSound.start();
+            }
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
-
 
     public void startSoundOraciones(String filename, Context context) {
         AssetFileDescriptor afd = null;
@@ -141,17 +169,15 @@ public class ReproductorDeAudioController {
         int duration = player.getDuration();
         player.start();
         try {
-            Thread.sleep(duration/2);
-        }catch(InterruptedException e){
+            Thread.sleep(duration / 2);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         player.stop();
     }
 
 
-
-
-    public void startSoundOracionesNoise(String filename, String rutaRuido,float intensidad, Context context){
+    public void startSoundOracionesNoise(String filename, String rutaRuido, float intensidad, Context context) {
         AssetFileDescriptor afd = null;
         try {
             afd = context.getResources().getAssets().openFd(filename);
@@ -170,7 +196,7 @@ public class ReproductorDeAudioController {
 
         try {
             assert afdRuido != null;
-            mpRuido.setDataSource(afdRuido.getFileDescriptor(),afdRuido.getStartOffset(),afdRuido.getLength());
+            mpRuido.setDataSource(afdRuido.getFileDescriptor(), afdRuido.getStartOffset(), afdRuido.getLength());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -179,7 +205,7 @@ public class ReproductorDeAudioController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mpRuido.setVolume(intensidad,intensidad);
+        mpRuido.setVolume(intensidad, intensidad);
         mpRuido.start();
 
         try {
@@ -196,8 +222,8 @@ public class ReproductorDeAudioController {
         int duration = mpSound.getDuration();
         mpSound.start();
         try {
-            Thread.sleep(duration/2);
-        }catch(InterruptedException e){
+            Thread.sleep(duration / 2);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         mpRuido.stop();

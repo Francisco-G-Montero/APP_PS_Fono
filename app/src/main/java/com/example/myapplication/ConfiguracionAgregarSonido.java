@@ -17,10 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.myapplication.datos.Constantes;
+import com.example.myapplication.common.constants.Constantes;
 import com.example.myapplication.room_database.palabras.Sound;
 import com.example.myapplication.room_database.palabras.SoundRepository;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;

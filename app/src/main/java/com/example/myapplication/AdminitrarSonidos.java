@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.common.adapters.SoundsAdapter;
+import com.example.myapplication.controllers.ReproductorDeAudioController;
 import com.example.myapplication.room_database.palabras.Sound;
 import com.example.myapplication.room_database.palabras.SoundViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -66,7 +67,8 @@ public class AdminitrarSonidos extends AppCompatActivity {
         soundsAdapter.setOnItemClickListener( new SoundsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Sound sound) {
-                Toast.makeText(AdminitrarSonidos.this, sound.getId(), Toast.LENGTH_SHORT).show();
+                ReproductorDeAudioController rp = new ReproductorDeAudioController();
+                rp.startSoundNoNoise(sound.getRuta_sonido(), getApplicationContext());
             }
         });
 
@@ -75,7 +77,6 @@ public class AdminitrarSonidos extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),ConfiguracionAgregarSonido.class);
                 startActivity(intent);
-
             }
         });
 

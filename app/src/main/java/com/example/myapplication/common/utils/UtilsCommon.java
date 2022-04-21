@@ -11,6 +11,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AlertDialog;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class UtilsCommon {
     public static void displayAlertMessage(View root, String titulo, String cuerpo) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(root.getContext())
@@ -64,5 +67,31 @@ public class UtilsCommon {
 
     public static void showSnackbar(View view, String text, int duration) {
         Snackbar.make(view, text, Snackbar.LENGTH_INDEFINITE).setDuration(duration).show();
+    }
+
+
+    public static int getRandomCorrectAnswerText() {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        arrayList.add(R.string.correct1);
+        arrayList.add(R.string.correct2);
+        arrayList.add(R.string.correct3);
+        arrayList.add(R.string.correct4);
+        arrayList.add(R.string.correct5);
+        arrayList.add(R.string.correct6);
+        arrayList.add(R.string.correct7);
+        arrayList.add(R.string.correct8);
+        Random rand = new Random();
+        int index = rand.nextInt(arrayList.size());
+        return arrayList.get(index);
+    }
+
+    public static int getRandomIncorrectAnswerText() {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        arrayList.add(R.string.incorrect1);
+        arrayList.add(R.string.incorrect2);
+        arrayList.add(R.string.incorrect3);
+        Random rand = new Random();
+        int index = rand.nextInt(arrayList.size());
+        return arrayList.get(index);
     }
 }

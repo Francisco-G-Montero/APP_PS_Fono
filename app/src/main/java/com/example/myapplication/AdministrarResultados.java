@@ -13,13 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.common.adapters.ResultadosAdapter;
+import com.example.myapplication.common.entities.OptionAnswer;
 import com.example.myapplication.room_database.resultados.Resultado;
 import com.example.myapplication.room_database.resultados.ResultadoViewModel;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AdministrarResultados extends AppCompatActivity {
-
+    private final ArrayList<OptionAnswer> mOptionAnswersList = new ArrayList<>();
     private ResultadoViewModel resultadoViewModel;
 
     @Override
@@ -32,7 +35,6 @@ public class AdministrarResultados extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
 
         RecyclerView mRecyclerView = findViewById(R.id.recyclerAdministrarResultados);
@@ -57,8 +59,7 @@ public class AdministrarResultados extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                    resultadoViewModel.eliminarResultado(resultadosAdapter.getResultadoAt(viewHolder.getAdapterPosition()));
-
+                resultadoViewModel.eliminarResultado(resultadosAdapter.getResultadoAt(viewHolder.getAdapterPosition()));
             }
         }).attachToRecyclerView(mRecyclerView);
 
@@ -66,7 +67,7 @@ public class AdministrarResultados extends AppCompatActivity {
             @Override
             public void onItemClick(Resultado resultado) {
                 //Toast.makeText(AdministrarResultados.this, resultado.getId()+"", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), DetalleResultado.class);
+                Intent intent = new Intent(getApplicationContext(), ActivityDetalleResultado.class);
                 intent.putExtra("fecha", resultado.getFecha());
                 intent.putExtra("ejercicio", resultado.getTipo_ejercicio());
                 intent.putExtra("categoria", resultado.getCategoria());
@@ -74,7 +75,21 @@ public class AdministrarResultados extends AppCompatActivity {
                 intent.putExtra("intensidad", resultado.getIntensidad());
                 intent.putExtra("errores", resultado.getErrores());
                 intent.putExtra("resultado", resultado.getResultado());
-                intent.putExtra("volverMenu",false);
+                intent.putExtra("volverMenu", false);
+                List<String> errorList = new ArrayList<>();
+                errorList = Arrays.asList(resultado.getErrores().split("-"));
+                String[] aciertosList = resultado.getAciertos()
+                        .replace("[", "")
+                        .replace("]", "")
+                        .trim()
+                        .split(",");
+                for (int i = 0; i < aciertosList.length; i++) {
+                    OptionAnswer optionAnswer = new OptionAnswer();
+                    optionAnswer.setCorrectAnswer(aciertosList[i]);
+                    optionAnswer.setErrorList(new ArrayList<>(Arrays.asList(errorList.get(i).split(","))));
+                    mOptionAnswersList.add(optionAnswer);
+                }
+                intent.putExtra(getString(R.string.error_resume), mOptionAnswersList);
                 startActivity(intent);
             }
         });

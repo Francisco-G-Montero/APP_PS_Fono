@@ -3,27 +3,42 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/drawable/background_circular.xml" value="0.196" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/drawable/background_dialog.xml" value="0.3828125" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/drawable/background_spinner.xml" value="0.196" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/drawable/boton_circular.xml" value="0.196" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/drawable/fade_out.xml" value="0.196" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/drawable/gradient_navigation.xml" value="0.1985" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.22135416666666666" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/drawable/ic_correct.xml" value="0.22135416666666666" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/drawable/ic_wrong.xml" value="0.22135416666666666" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/drawable/icon_play.xml" value="0.22135416666666666" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/drawable/splash_screen.xml" value="0.196" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/activity_administrar_resultados.xml" value="0.20520833333333333" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/activity_configuracion.xml" value="0.33" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/activity_configuracion_agregar_sonido.xml" value="0.36277173913043476" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/activity_detalle_resultado.xml" value="0.20520833333333333" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/activity_ejercicios_opciones.xml" value="0.20520833333333333" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/activity_main.xml" value="0.29981884057971014" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/activity_practica.xml" value="0.20520833333333333" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/activity_slash_screen.xml" value="0.18802083333333333" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/dialog_game_settings.xml" value="0.33" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/dropdown_menu_popup_item.xml" value="0.36277173913043476" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/ejercicio_cinco_opciones.xml" value="0.33" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/ejercicio_completar.xml" value="0.36277173913043476" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/ejercicio_tres_opciones.xml" value="0.29438405797101447" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/fragment_ejercitacion.xml" value="0.33" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/fragment_evaluacion.xml" value="0.18802083333333333" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/item_option.xml" value="0.33" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/navigation_header.xml" value="0.4854771784232365" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/practica_item.xml" value="0.20520833333333333" />
         <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/layout/resultado_item.xml" value="0.33" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/menu/navigation_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android/Android projects/UTN/APP_PS_Fono/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.196" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

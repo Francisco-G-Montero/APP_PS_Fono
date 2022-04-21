@@ -36,6 +36,9 @@ public interface SoundDao {
     @Query("SELECT * FROM sonidos WHERE nombre_sonido = :nombreSonido ")
     LiveData<List<Sound>> getRutaSonido(String nombreSonido);
 
+    @Query("SELECT * FROM sonidos WHERE nombre_sonido = :nombreSonido ")
+    LiveData<Sound> getNecesitoConnector(String nombreSonido);
+
     @Query("DELETE FROM sonidos")
     void borrarTodos();
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetalleResultado">
+    tools:context=".ActivityDetalleResultado">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_detalle_resultado"
@@ -192,9 +192,9 @@
                 app:row_gravity="center"
                 app:header_vertical_padding="16dp"
                 app:header_horizontal_padding="0dp"
-                app:row_vertical_padding="8dp"
-                app:header_text_size="8sp"
-                app:row_text_size="7sp"
+                app:row_vertical_padding="7dp"
+                app:header_text_size="7sp"
+                app:row_text_size="6sp"
                 app:row_text_color="#000"
                 app:header_text_color="#000"
                 app:row_background_color="#fff"

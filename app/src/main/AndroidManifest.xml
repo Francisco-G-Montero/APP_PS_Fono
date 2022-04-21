@@ -19,7 +19,7 @@
             android:name=".logica.EjerciciosOpcionesActivity"
             android:exported="true" />
         <activity
-            android:name=".DetalleResultado"
+            android:name=".ActivityDetalleResultado"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
@@ -36,7 +36,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.PopUpGrabar" />
         <activity
-            android:name=".Configuracion"
+            android:name=".ActivityConfig"
             android:screenOrientation="portrait" />
         <activity
             android:name=".logica.EjercicioEscribirOyoActivity"
@@ -47,6 +47,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

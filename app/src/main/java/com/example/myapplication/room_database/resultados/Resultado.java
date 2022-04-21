@@ -20,10 +20,12 @@ public class Resultado {
     private String intensidad;
     @ColumnInfo(name = "errores")
     private String errores;
+    @ColumnInfo(name = "aciertos")
+    private String aciertos;
     @ColumnInfo(name = "resultado")
     private String resultado;
 
-    public Resultado(String fecha, String tipo_ejercicio, String categoria, String ruido, String intensidad, String errores, String resultado) {
+    public Resultado(String fecha, String tipo_ejercicio, String categoria, String ruido, String intensidad, String errores, String aciertos,String resultado) {
         this.fecha = fecha;
         this.tipo_ejercicio = tipo_ejercicio;
         this.categoria = categoria;
@@ -31,6 +33,7 @@ public class Resultado {
         this.intensidad = intensidad;
         this.errores = errores;
         this.resultado = resultado;
+        this.aciertos = aciertos;
     }
 
     public int getId() {
@@ -95,5 +98,13 @@ public class Resultado {
 
     public void setResultado(String resultado) {
         this.resultado = resultado;
+    }
+
+    public String getAciertos() {
+        return aciertos;
+    }
+
+    public void setAciertos(String aciertos) {
+        this.aciertos = aciertos;
     }
 }

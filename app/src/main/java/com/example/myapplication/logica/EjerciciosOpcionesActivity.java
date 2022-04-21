@@ -1,5 +1,8 @@
 package com.example.myapplication.logica;
 
+import static com.example.myapplication.common.utils.UtilsCommon.getRandomCorrectAnswerText;
+import static com.example.myapplication.common.utils.UtilsCommon.getRandomIncorrectAnswerText;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.AnimationUtils;
@@ -10,12 +13,12 @@ import com.example.myapplication.common.adapters.OnOptionClickListener;
 import com.example.myapplication.common.adapters.OptionsAdapter;
 import com.example.myapplication.common.entities.OptionAnswer;
 import com.example.myapplication.controllers.ReproductorDeAudioController;
-import com.example.myapplication.DetalleResultado;
+import com.example.myapplication.ActivityDetalleResultado;
 import com.example.myapplication.R;
 import com.example.myapplication.common.utils.UtilsCommon;
 import com.example.myapplication.common.utils.UtilsSound;
 import com.example.myapplication.databinding.ActivityEjerciciosOpcionesBinding;
-import com.example.myapplication.datos.Constantes;
+import com.example.myapplication.common.constants.Constantes;
 import com.example.myapplication.room_database.palabras.Sound;
 import com.example.myapplication.room_database.palabras.SoundRepository;
 import com.google.android.material.button.MaterialButton;
@@ -30,8 +33,11 @@ import java.util.List;
 import java.util.Random;
 
 public class EjerciciosOpcionesActivity extends AppCompatActivity implements OnOptionClickListener {
-    public SoundRepository sr;
+    public SoundRepository soundRepository;
     private List<Sound> listaSonidos;
+    private final Random randomBoolean = new Random();
+    private final ReproductorDeAudioController audioController = new ReproductorDeAudioController();
+    private Sound necesitoSound, vasosGrandesSound, esHoySound, hoyEsSound, lloviendoSound;
     private int puntajeCorrecto;
     private int puntajeIncorrecto;
     private int repeticiones;
@@ -41,7 +47,7 @@ public class EjerciciosOpcionesActivity extends AppCompatActivity implements OnO
     private String tipoEjercicio = "";
     private int opcionCorrecta;
     private final int wrongAnswersLimit = 2;
-    private String ruido, subdato, errores = "";
+    private String ruido, subdato, errores = "", categoriaSeleccionada = "";
     private final ArrayList<OptionAnswer> mOptionAnswersList = new ArrayList<>();
     private final ArrayList<String> mOptions = new ArrayList<>();
     private ArrayList<Integer> optionList;
@@ -59,6 +65,7 @@ public class EjerciciosOpcionesActivity extends AppCompatActivity implements OnO
         repeticiones = 0;
 
         //Datos pasados desde la configuración
+        categoriaSeleccionada = getIntent().getStringExtra("categoriaSeleccionada");
         subdato = getIntent().getStringExtra("subDato");
         ruido = getIntent().getStringExtra("tipoRuido");
 
@@ -67,29 +74,49 @@ public class EjerciciosOpcionesActivity extends AppCompatActivity implements OnO
         mReproductorDeAudioController.setIntensidad(intensidad);
 
         mBinding.btnSettings.setOnClickListener(v -> UtilsCommon.displayNoiseSettingsAlert(mBinding.getRoot()));
-        sr = new SoundRepository(getApplication());
+        soundRepository = new SoundRepository(getApplication());
         switch (subdato) {
             case Constantes.DIAS_SEMANA:
-                sr.getDiasSounds().observe(this, sounds -> {
-                    listaSonidos = sounds;
-                    setup();
+                soundRepository.getDiasSounds().observe(this, sounds -> {
+                    soundRepository.getHoyEsSound().observe(this, hoyEs -> {
+                        hoyEsSound = hoyEs;
+                        soundRepository.getEsHoySound().observe(this, esHoy -> {
+                            esHoySound = esHoy;
+                            soundRepository.getyLLoviendoSound().observe(this, lloviendo -> {
+                                lloviendoSound = lloviendo;
+                                listaSonidos = sounds;
+                                setup();
+                            });
+                        });
+                    });
                 });
                 break;
             case Constantes.NUMEROS:
-                sr.getNumerosSounds().observe(this, sounds -> {
-                    listaSonidos = sounds;
-                    setup();
+                soundRepository.getNumerosSounds().observe(this, sounds -> {
+                    if (categoriaSeleccionada.equals(Constantes.ORACIONES)) {
+                        soundRepository.getNecesitoSound().observe(this, necesito -> {
+                            soundRepository.getVasosGrandes().observe(this, vasosGrandes -> {
+                                vasosGrandesSound = vasosGrandes;
+                                necesitoSound = necesito;
+                                listaSonidos = sounds;
+                                setup();
+                            });
+                        });
+                    } else {
+                        listaSonidos = sounds;
+                        setup();
+                    }
                 });
                 break;
             case Constantes.MESES:
-                sr.getMesesSounds().observe(this, sounds -> {
+                soundRepository.getMesesSounds().observe(this, sounds -> {
                     listaSonidos = sounds;
                     setup();
                 });
                 break;
 
             case Constantes.COLORES:
-                sr.getColoresSounds().observe(this, sounds -> {
+                soundRepository.getColoresSounds().observe(this, sounds -> {
                     listaSonidos = sounds;
                     setup();
                 });
@@ -106,7 +133,7 @@ public class EjerciciosOpcionesActivity extends AppCompatActivity implements OnO
             optionsQuantity = 3;
         else if (tipoEjercicio.equals(Constantes.J_IDENTIFICAR_CINCO_OPCIONES))
             optionsQuantity = 5;
-        else  if (tipoEjercicio.equals(Constantes.J_TODA_LA_CATEGORIA))
+        else if (tipoEjercicio.equals(Constantes.J_TODA_LA_CATEGORIA))
             optionsQuantity = listaSonidos.size();
         optionList = obtenerNumero(optionsQuantity);
         setTexts(optionList);
@@ -118,24 +145,61 @@ public class EjerciciosOpcionesActivity extends AppCompatActivity implements OnO
         optionAnswer.setCorrectAnswer(listaSonidos.get(optionList.get(opcionCorrecta)).getNombre_sonido());
         mOptionAnswersList.add(optionAnswer);
 
-
         mBinding.btnPlay.setOnClickListener(v -> {
             if (activarSonido()) {
-                sr.getRutaSonido(ruido).observe(this, sounds -> {
-                    ReproductorDeAudioController rp = new ReproductorDeAudioController();
-                    rp.startSoundWithNoise(
+                soundRepository.getRutaSonido(ruido).observe(this, sounds -> {
+                    audioController.startSoundWithNoise(
                             listaSonidos.get(optionList.get(opcionCorrecta)).getRuta_sonido(),
                             sounds.get(0).getRuta_sonido(),
                             mReproductorDeAudioController.getIntensidad(),
                             getApplicationContext()
                     );
                 });
+            } else if (categoriaSeleccionada.equals(Constantes.ORACIONES) && subdato.equals(Constantes.NUMEROS)){
+                boolean complexSentence = getRandomBoolean();
+                if(complexSentence){
+                    audioController.sentenceWithConnectors(
+                            necesitoSound.getRuta_sonido(),
+                            vasosGrandesSound.getRuta_sonido(),
+                            listaSonidos.get(optionList.get(opcionCorrecta)).getRuta_sonido(),
+                            true,
+                            getApplicationContext());
+                }else{
+                    audioController.sentenceWithConnectors(
+                            necesitoSound.getRuta_sonido(),
+                            null,
+                            listaSonidos.get(optionList.get(opcionCorrecta)).getRuta_sonido(),
+                            getRandomBoolean(),
+                            getApplicationContext());
+                }
+            } else if (categoriaSeleccionada.equals(Constantes.ORACIONES) && subdato.equals(Constantes.DIAS_SEMANA)){
+                boolean complexSentence = getRandomBoolean();
+                if(complexSentence){
+                    audioController.sentenceWithConnectors(
+                            hoyEsSound.getRuta_sonido(),
+                            lloviendoSound.getRuta_sonido(),
+                            listaSonidos.get(optionList.get(opcionCorrecta)).getRuta_sonido(),
+                            true,
+                            getApplicationContext());
+                }else{
+                    boolean connectorAtStart = getRandomBoolean();
+                    Sound connector;
+                    if (connectorAtStart){
+                        connector = hoyEsSound;
+                    } else {
+                        connector = esHoySound;
+                    }
+                    audioController.sentenceWithConnectors(
+                            connector.getRuta_sonido(),
+                            null,
+                            listaSonidos.get(optionList.get(opcionCorrecta)).getRuta_sonido(),
+                            connectorAtStart,
+                            getApplicationContext());
+                }
             } else {
-                ReproductorDeAudioController rp = new ReproductorDeAudioController();
-                rp.startSoundNoNoise(listaSonidos.get(optionList.get(opcionCorrecta)).getRuta_sonido(), getApplicationContext());
+                audioController.startSoundNoNoise(listaSonidos.get(optionList.get(opcionCorrecta)).getRuta_sonido(), getApplicationContext());
             }
         });
-
     }
 
     void setTexts(ArrayList<Integer> optionList) {
@@ -189,7 +253,7 @@ public class EjerciciosOpcionesActivity extends AppCompatActivity implements OnO
             Date date = Calendar.getInstance().getTime();
             DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             String today = formatter.format(date);
-            Intent intent = new Intent(getApplicationContext(), DetalleResultado.class);
+            Intent intent = new Intent(getApplicationContext(), ActivityDetalleResultado.class);
             intent.putExtra("fecha", today);
             intent.putExtra("ejercicio", tipoEjercicio);
             intent.putExtra("categoria", subdato);
@@ -199,31 +263,6 @@ public class EjerciciosOpcionesActivity extends AppCompatActivity implements OnO
             intent.putExtra("resultado", puntajeCorrecto + "");
             startActivity(intent);
         }
-    }
-
-    private int getRandomIncorrectAnswerText() {
-        ArrayList<Integer> arrayList = new ArrayList<>();
-        arrayList.add(R.string.incorrect1);
-        arrayList.add(R.string.incorrect2);
-        arrayList.add(R.string.incorrect3);
-        Random rand = new Random();
-        int index = rand.nextInt(arrayList.size());
-        return arrayList.get(index);
-    }
-
-    private int getRandomCorrectAnswerText() {
-        ArrayList<Integer> arrayList = new ArrayList<>();
-        arrayList.add(R.string.correct1);
-        arrayList.add(R.string.correct2);
-        arrayList.add(R.string.correct3);
-        arrayList.add(R.string.correct4);
-        arrayList.add(R.string.correct5);
-        arrayList.add(R.string.correct6);
-        arrayList.add(R.string.correct7);
-        arrayList.add(R.string.correct8);
-        Random rand = new Random();
-        int index = rand.nextInt(arrayList.size());
-        return arrayList.get(index);
     }
 
     boolean activarSonido() {
@@ -243,11 +282,15 @@ public class EjerciciosOpcionesActivity extends AppCompatActivity implements OnO
             setup();
         } else {
             OptionAnswer optionAnswer = mOptionAnswersList.get(mOptionAnswersList.size() - 1);
-            optionAnswer.addError(btnOption.getText().toString());
+            optionAnswer.addError(btnOption.getText().toString()+" ✖");
             mOptionAnswersList.set(mOptionAnswersList.size() - 1, optionAnswer);
             errores = errores + listaSonidos.get(optionList.get(opcionCorrecta)).getNombre_sonido() + "\n";
             modificarPuntaje(false);
             btnOption.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake_animation));
         }
+    }
+
+    boolean getRandomBoolean(){
+        return randomBoolean.nextBoolean();
     }
 }
