@@ -1,5 +1,7 @@
 package com.example.myapplication.logica;
 
+import static com.example.myapplication.common.constants.Constantes.NEXT_SEPARATOR_ERROR;
+import static com.example.myapplication.common.constants.Constantes.SAME_EXERCISE_ERROR;
 import static com.example.myapplication.common.utils.UtilsCommon.getRandomIncorrectAnswerText;
 
 import android.content.Intent;
@@ -34,6 +36,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
 
 public class EjercicioEscribirOyoActivity extends AppCompatActivity {
     private ActivityEscribirOyoBinding binding;
@@ -171,8 +174,9 @@ public class EjercicioEscribirOyoActivity extends AppCompatActivity {
 
     void modificarPuntaje(TextView puntaje, int respuestaIndex) {
         String points = null;
-
+        boolean finishExercise = finEjercicio();
         if (puntaje.getId() == R.id.puntaje) {
+            errores += NEXT_SEPARATOR_ERROR;
             puntajeCorrecto++;
             incorrectCounterStage = 0;
             points = Integer.toString(puntajeCorrecto);
@@ -185,7 +189,7 @@ public class EjercicioEscribirOyoActivity extends AppCompatActivity {
             errores = errores + etNombre.getText().toString() + " ✖";
             UtilsSound.announceAnswerSound(binding.getRoot(), false);
             if (incorrectCounterStage >= wrongAnswersLimit) {
-                errores += "-";
+                errores += NEXT_SEPARATOR_ERROR;
                 incorrectCounterStage = 0;
                 UtilsCommon.displayAlertMessage(binding.getRoot(),
                         "¡Te has equivocado más de " + wrongAnswersLimit + " veces!",
@@ -194,36 +198,42 @@ public class EjercicioEscribirOyoActivity extends AppCompatActivity {
                 reproductorDeAudioController.startSoundNoNoise(listaSonidos.get(respuestaIndex).getRuta_sonido(), getApplicationContext());
                 setup(obtenerNumero());
             } else {
-                errores += ",";
+                errores += SAME_EXERCISE_ERROR;
                 int incorrectAnswerRes = getRandomIncorrectAnswerText();
                 UtilsCommon.showSnackbar(binding.getRoot(), getString(incorrectAnswerRes));
+                if(finishExercise) errores += "——" + NEXT_SEPARATOR_ERROR;
+
             }
         }
         puntaje.setText(points);
 
-        if (modo.equals(Constantes.EVALUACION) && finEjercicio()) {
+        if (modo.equals(Constantes.EVALUACION) && finishExercise) {
             //Toast.makeText(Ejercicio_Tres_Opciones.this, "Puntaje Correcto" + puntajeCorrecto + " Puntaje Incorrecto " + puntajeIncorrecto, Toast.LENGTH_SHORT).show();
             Date date = Calendar.getInstance().getTime();
             DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            String today = formatter.format(date);
-            ResultadoRepository resultadoRepository = new ResultadoRepository(getApplication());
-            ArrayList<String> aciertosList = new ArrayList<>();
-            for(OptionAnswer optionAnswer : mOptionAnswersList){
-                aciertosList.add(optionAnswer.getCorrectAnswer());
-            }
-            Resultado resultado = new Resultado(today, Constantes.J_ESCRIBIR_LO_QUE_OYO, subdato, ruido, intensidadPorcentual + "%", errores, aciertosList.toString(), puntajeCorrecto + "");
-            resultadoRepository.agregarResultado(resultado);
+            String dateToday = formatter.format(date);
+            saveResult(dateToday);
             Intent intent = new Intent(getApplicationContext(), ActivityDetalleResultado.class);
-            intent.putExtra("fecha", today);
+            intent.putExtra("fecha", dateToday);
             intent.putExtra("ejercicio", Constantes.J_ESCRIBIR_LO_QUE_OYO);
             intent.putExtra("categoria", subdato);
             intent.putExtra("ruido", ruido);
             intent.putExtra("intensidad", intensidadPorcentual + "%");
-            intent.putExtra("errores", errores);
             intent.putExtra("resultado", puntajeCorrecto + "");
+            intent.putExtra("errores", errores);
             intent.putExtra(getString(R.string.error_resume), mOptionAnswersList);
             startActivity(intent);
         }
+    }
+
+    private void saveResult(String dateToday) {
+        ResultadoRepository resultadoRepository = new ResultadoRepository(getApplication());
+        ArrayList<String> aciertosList = new ArrayList<>();
+        for(OptionAnswer optionAnswer : mOptionAnswersList){
+            aciertosList.add(optionAnswer.getCorrectAnswer());
+        }
+        Resultado resultado = new Resultado(dateToday, Constantes.J_ESCRIBIR_LO_QUE_OYO, subdato, ruido, intensidadPorcentual + "%", errores, aciertosList.toString(), puntajeCorrecto + "");
+        resultadoRepository.agregarResultado(resultado);
     }
 
     boolean finEjercicio() {

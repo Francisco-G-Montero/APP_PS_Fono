@@ -1,5 +1,8 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.common.constants.Constantes.NEXT_SEPARATOR_ERROR;
+import static com.example.myapplication.common.constants.Constantes.SAME_EXERCISE_ERROR;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,7 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AdministrarResultados extends AppCompatActivity {
-    private final ArrayList<OptionAnswer> mOptionAnswersList = new ArrayList<>();
     private ResultadoViewModel resultadoViewModel;
 
     @Override
@@ -77,16 +79,17 @@ public class AdministrarResultados extends AppCompatActivity {
                 intent.putExtra("resultado", resultado.getResultado());
                 intent.putExtra("volverMenu", false);
                 List<String> errorList = new ArrayList<>();
-                errorList = Arrays.asList(resultado.getErrores().split("-"));
+                errorList = Arrays.asList(resultado.getErrores().split(NEXT_SEPARATOR_ERROR));
                 String[] aciertosList = resultado.getAciertos()
                         .replace("[", "")
                         .replace("]", "")
                         .trim()
                         .split(",");
+                ArrayList<OptionAnswer> mOptionAnswersList = new ArrayList<>();
                 for (int i = 0; i < aciertosList.length; i++) {
                     OptionAnswer optionAnswer = new OptionAnswer();
                     optionAnswer.setCorrectAnswer(aciertosList[i]);
-                    optionAnswer.setErrorList(new ArrayList<>(Arrays.asList(errorList.get(i).split(","))));
+                    optionAnswer.setErrorList(new ArrayList<>(Arrays.asList(errorList.get(i).split(SAME_EXERCISE_ERROR))));
                     mOptionAnswersList.add(optionAnswer);
                 }
                 intent.putExtra(getString(R.string.error_resume), mOptionAnswersList);

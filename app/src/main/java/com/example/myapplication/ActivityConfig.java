@@ -208,6 +208,7 @@ public class ActivityConfig extends AppCompatActivity {
                         intent.putExtra("subDato", confSubDato);
                         intent.putExtra("tipoRuido", confRuido);
                         intent.putExtra("intensidad", confIntensidad);
+                        intent.putExtra("modo", modo);
                         intent.putExtra(getString(R.string.tipo_ejercicio), confTipoEjercio);
                         startActivity(intent);
                     }

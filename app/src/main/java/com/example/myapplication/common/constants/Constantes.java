@@ -65,4 +65,7 @@ public abstract class Constantes {
     public static final String EJERCITACION = "Ejercitación";
     public static final String EVALUACION = "Evaluación";
 
+    public static final String SAME_EXERCISE_ERROR = ",";
+    public static final String NEXT_SEPARATOR_ERROR = "-";
+
 }
